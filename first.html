@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="zh - CN">
+
+<head>
+    <meta charset="UTF - 8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>纪念日解密游戏</title>
+    <style>
+        body {
+            font-family: Arial, sans - serif;
+            padding: 20px;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        input {
+            padding: 10px;
+            margin: 10px 0;
+        }
+
+        #hint {
+            color: red;
+        }
+
+        #image {
+            max - width: 100%;
+            height: auto;
+        }
+
+        #music - box {
+            display: none;
+            text - align: center;
+        }
+
+        #music - box img {
+            width: 200px;
+            height: 200px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>第一关：基于 OSINT 的信息搜集与推理（新 - 分步）</h1>
+    <!-- 开场引导 -->
+    <div id="step1">
+        <p>亲爱的，欢迎开启这场专属于我们的解密之旅。在这个关卡，你要化身机智侦探，探寻我在 2022 年那个意义非凡的纪念日。线索就藏在网络世界里，而这个纪念日呀，和我与同事们的奇妙经历紧密相连，快出发去揭开它的面纱吧！</p>
+        <button onclick="nextStep('step2')">开始第一步</button>
+    </div>
+
+    <!-- 第一步：平台抉择 -->
+    <div id="step2" style="display:none;">
+        <h2>第一步：平台抉择</h2>
+        <p>网络世界纷繁复杂，首先你得选个“秘密基地”开启搜索。可供挑选的有充满即时分享的微博、擅长图文记录生活的小红书，还有聚焦本地活动的生活论坛。思考下，我这类上班族最爱在哪分享细腻生活瞬间呢？做出你的选择。</p>
+        <img src="weibo_logo.png" alt="微博图标" style="width:50px;height:50px;">
+        <button onclick="checkPlatform('微博')">微博</button>
+        <img src="xiaohongshu_logo.png" alt="小红书图标" style="width:50px;height:50px;">
+        <button onclick="checkPlatform('小红书')">小红书</button>
+        <img src="forum_logo.png" alt="论坛图标" style="width:50px;height:50px;">
+        <button onclick="checkPlatform('生活论坛')">生活论坛</button>
+        <p id="hint"></p>
+    </div>
+
+    <!-- 第二步：初设关键词 -->
+    <div id="step3" style="display:none;">
+        <h2>第二步：初设关键词</h2>
+        <p>假设你选了小红书（若选其他平台，后续相应调整）。现在，依据已知线索——地点上海和神秘的“神秘聚会”，构思一组关键词。这个聚会可不简单，是我和同事们的欢乐时光，试着用关键词描绘出这个场景。</p>
+        <img id="image" src="shanghai_landmark.jpg" alt="上海地标">
+        <img id="image" src="party.jpg" alt="聚会">
+        <input type="text" id="keyword1" placeholder="输入关键词">
+        <button onclick="checkKeyword1()">提交关键词</button>
+        <p id="hint"></p>
+    </div>
+
+    <!-- 第三步：优化关键词 -->
+    <div id="step4" style="display:none;">
+        <h2>第三步：优化关键词</h2>
+        <p>初步搜索没收获？别着急，现在有新线索——聚会时吃了一种特别的美食，它源自日本，将鸡肉串起来烤制，深受大家喜爱。根据这个线索，优化你的关键词，争取更精准定位。</p>
+        <img id="image" src="yakitori.jpg" alt="烧鸟">
+        <img id="image" src="japanese_restaurant.jpg" alt="日式居酒屋">
+        <input type="text" id="keyword2" placeholder="输入优化后的关键词">
+        <button onclick="checkKeyword2()">提交关键词</button>
+        <p id="hint"></p>
+    </div>
+
+    <!-- 第四步：探寻微妙线索 -->
+    <div id="step5" style="display:none;">
+        <h2>第四步：探寻微妙线索</h2>
+        <p>经过关键词的优化，搜索结果里藏着不少“宝藏”。仔细翻阅，寻找一条能暗示我和某位同事关系发生微妙变化的线索。这条线索可能藏在看似平常的文字里，或者特别的图片细节中。</p>
+        <img id="image" src="subtle_clue.jpg" alt="微妙线索图片">
+        <button onclick="checkSubtleClue()">寻找线索</button>
+        <p id="hint"></p>
+    </div>
+
+    <!-- 第五步：新线索提示 -->
+    <div id="step6" style="display:none;">
+        <h2>第五步：新线索提示</h2>
+        <p>恭喜你找到了关键的微妙线索，现在，新的线索来咯——雪花飘落的浪漫时刻。结合这个线索，快推理出那个重要的纪念日日期吧。</p>
+        <img id="image" src="snow.jpg" alt="雪花飘落">
+    </div>
+
+    <!-- 第六步：解锁纪念日密码 -->
+    <div id="step7" style="display:none;">
+        <h2>第六步：解锁纪念日密码</h2>
+        <p>综合所有线索，开动聪明的脑袋，推理出那个重要的纪念日日期。</p>
+        <input type="text" id="date" placeholder="输入纪念日日期">
+        <button onclick="checkDate()">提交日期</button>
+        <p id="hint"></p>
+    </div>
+
+    <!-- 小礼品获取 -->
+    <div id="step8" style="display:none;">
+        <h2>小礼品获取</h2>
+        <div id="music - box">
+            <img src="music_box.png" alt="音乐盒">
+            <audio id="music" src="simple_love.mp3" autoplay></audio>
+            <p>播放《简单爱》</p>
+        </div>
+        <p>甜蜜的奖励来啦！游戏界面会弹出一个梦幻音乐盒，播放那首充满爱意的《简单爱》，音乐盒周围还有粉色花瓣飘落，就像我们的美好回忆在眼前浮现。</p>
+    </div>
+
+    <script>
+        function nextStep(step) {
+            document.getElementById('step1').style.display = 'none';
+            document.getElementById('step2').style.display = 'none';
+            document.getElementById('step3').style.display = 'none';
+            document.getElementById('step4').style.display = 'none';
+            document.getElementById('step5').style.display = 'none';
+            document.getElementById('step6').style.display = 'none';
+            document.getElementById('step7').style.display = 'none';
+            document.getElementById('step8').style.display = 'none';
+            document.getElementById(step).style.display = 'block';
+        }
+
+        function checkPlatform(platform) {
+            const correctPlatform = '小红书';
+            if (platform === correctPlatform) {
+                document.getElementById('hint').innerHTML = '';
+                nextStep('step3');
+            } else {
+                document.getElementById('hint').innerHTML = '哎呀，这个选择不太对呢。再琢磨琢磨，我平时更倾向于在哪留下那些有滋有味的生活记录呀？';
+            }
+        }
+
+        function checkKeyword1() {
+            const keyword = document.getElementById('keyword1').value;
+            if (keyword.includes('上海') && keyword.includes('聚会')) {
+                document.getElementById('hint').innerHTML = '';
+                nextStep('step4');
+            } else {
+                document.getElementById('hint').innerHTML = '这组关键词可能还没抓住精髓哟。想想上海的独特之处，怎样让关键词更能体现那场特别聚会的魅力呢？';
+            }
+        }
+
+        function checkKeyword2() {
+            const keyword = document.getElementById('keyword2').value;
+            if (keyword.includes('上海') && keyword.includes('烧鸟') && keyword.includes('聚会')) {
+                document.getElementById('hint').innerHTML = '';
+                nextStep('step5');
+            } else {
+                document.getElementById('hint').innerHTML = '似乎还差点火候。再想想，怎样把美食、上海以及聚会的氛围更好地融合在关键词里，让它像一把精准的钥匙呢？';
+            }
+        }
+
+        function checkSubtleClue() {
+            // 这里简单模拟线索判断，实际可从预设数据或服务器获取数据
+            document.getElementById('hint').innerHTML = '';
+            nextStep('step6');
+        }
+
+        function checkDate() {
+            const date = document.getElementById('date').value;
+            if (date === '20220129') {
+                document.getElementById('hint').innerHTML = '';
+                nextStep('step8');
+            } else {
+                document.getElementById('hint').innerHTML = '日期不对哦，请再仔细想想。';
+            }
+        }
+    </script>
+</body>
+
+</html>
